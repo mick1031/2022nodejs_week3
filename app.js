@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const dotenv = require('dotenv');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,7 +12,8 @@ var postsRouter = require('./routes/posts');
 
 var app = express();
 
-const DB = 'mongodb://localhost:27017/blog';
+dotenv.config({ path: './config.env' });
+const DB = process.env.DATABASE.replace('<password>', process.env.DATABASE_PASSWORD);
 mongoose.connect(DB)
     .then(() => {
         console.log('資料庫連線成功')
