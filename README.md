@@ -1,0 +1,1 @@
+express {project_name} --no-view
