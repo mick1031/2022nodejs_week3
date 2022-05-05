@@ -1,0 +1,84 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Posts - Express",
+		"_postman_id": "7b6007f6-a3d6-18fe-b77a-e1a0e75e0e3e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "取得 Posts",
+			"request": {
+				"url": "https://vast-scrubland-96197.herokuapp.com/posts",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "新增 Post",
+			"request": {
+				"url": "https://vast-scrubland-96197.herokuapp.com/posts",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"米刻 更新\",\n\t\"tags\": [\"感情\", \"幹話\"],\n\t\"type\": \"group\",\n\t\"image\": \"https://images.unsplash.com/photo-1651443039959-582bbea6be6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80\",\n\t\"content\": \"這是一個測試的更新貼文\",\n\t\"likes\": 168,\n\t\"comments\": 66\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "更新 Post",
+			"request": {
+				"url": "https://vast-scrubland-96197.herokuapp.com/posts/62740997bada87b013e43557",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"米刻 更新\",\n\t\"tags\": [\"感情\", \"幹話\"],\n\t\"type\": \"group\",\n\t\"image\": \"https://images.unsplash.com/photo-1651443039959-582bbea6be6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80\",\n\t\"content\": \"這是一個測試的更新貼文\",\n\t\"likes\": 168,\n\t\"comments\": 66\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "刪除全部 Posts",
+			"request": {
+				"url": "https://vast-scrubland-96197.herokuapp.com/posts",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "刪除特定 Post",
+			"request": {
+				"url": "https://vast-scrubland-96197.herokuapp.com/posts/62740997bada87b013e43557",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
