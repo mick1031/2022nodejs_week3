@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const Post = require('../models/PostSchema');
-const errorHandle = require('../errorHandle');
+const errorHandle = require('../handle/errorHandle');
+const successHandle = require('../handle/successHandle');
 
 
 router.get('/', async (req, res, next) => {
-    res.status(200)
-        .json(await Post.find());
+   await successHandle(res);
 });
 
 router.post('/', async (req, res, next) => {
@@ -23,11 +23,7 @@ router.post('/', async (req, res, next) => {
 
         await Post.create(model);
 
-        res.status(200)
-            .json({
-                status: "success",
-                data: await Post.find(),
-            });
+        await successHandle(res);
     } catch (error) {
         errorHandle(res);
     }
@@ -48,11 +44,7 @@ router.patch('/:id', async (req, res, next) => {
 
         await Post.findByIdAndUpdate(id, model);
 
-        res.status(200)
-            .json({
-                status: "success",
-                data: await Post.find(),
-            });
+        await successHandle(res);
     } else {
         errorHandle(res);
     }
@@ -61,26 +53,21 @@ router.patch('/:id', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
     await Post.deleteMany({});
 
-    res.status(200)
-        .json({
-            status: "success",
-            data: await Post.find(),
-        });
+    await successHandle(res);
 });
 
 router.delete('/:id', async (req, res, next) => {
-    const id = req.params.id;
-    const list = await Post.find({ _id: id });
-    const model = list[0];
-    if (model !== undefined) {
-        await Post.findByIdAndDelete(id);
-
-        res.status(200)
-            .json({
-                status: "success",
-                data: await Post.find(),
-            });
-    } else {
+    try {
+        const id = req.params.id;
+        const list = await Post.find({ _id: id });
+        const model = list[0];
+        if (model !== undefined) {
+            await Post.findByIdAndDelete(id);
+            successHandle(res);
+        } else {
+            errorHandle(res);
+        }
+    } catch(error) {
         errorHandle(res);
     }
 });
