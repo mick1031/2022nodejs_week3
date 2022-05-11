@@ -55,10 +55,10 @@ router.patch('/:id', async (req, res, next) => {
 
 router.delete('/', async (req, res, next) => {
     if (req.originalUrl == '/posts/') {
+        errorHandle(res);
+    } else {
         await Post.deleteMany({});
         await successHandle(res);
-    } else {
-        errorHandle(res);
     }
 });
 
