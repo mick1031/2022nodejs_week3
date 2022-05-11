@@ -6,7 +6,7 @@ const successHandle = require('../handle/successHandle');
 
 
 router.get('/', async (req, res, next) => {
-   await successHandle(res);
+    await successHandle(res);
 });
 
 router.post('/', async (req, res, next) => {
@@ -31,19 +31,17 @@ router.post('/', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
     const id = req.params.id;
-    const list = await Post.find({ _id: id });
-    const model = list[0];
-    if (model !== undefined && req.body != undefined) {
-        model.name = req.body.name;
-        model.tags = req.body.tags;
-        model.type = req.body.type;
-        model.image = req.body.image;
-        model.content = req.body.content;
-        model.likes = req.body.likes;
-        model.comments = req.body.comments;
-
-        await Post.findByIdAndUpdate(id, model);
-
+    const model = {
+        name: req.body.name,
+        tags: req.body.tags,
+        type: req.body.type,
+        image: req.body.image,
+        content: req.body.content,
+        likes: req.body.likes,
+        comments: req.body.comments,
+    };
+    const result = await Post.findByIdAndUpdate(id, model);
+    if (result) {
         await successHandle(res);
     } else {
         errorHandle(res);
@@ -51,23 +49,24 @@ router.patch('/:id', async (req, res, next) => {
 });
 
 router.delete('/', async (req, res, next) => {
-    await Post.deleteMany({});
-
-    await successHandle(res);
+    if (req.originalUrl == '/posts/') {
+        await Post.deleteMany({});
+        await successHandle(res);
+    } else {
+        errorHandle(res);
+    }
 });
 
 router.delete('/:id', async (req, res, next) => {
     try {
         const id = req.params.id;
-        const list = await Post.find({ _id: id });
-        const model = list[0];
-        if (model !== undefined) {
-            await Post.findByIdAndDelete(id);
+        const result = await Post.findByIdAndDelete(id);
+        if (result) {
             successHandle(res);
         } else {
             errorHandle(res);
         }
-    } catch(error) {
+    } catch (error) {
         errorHandle(res);
     }
 });
